@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tax Calculator</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    .container {
+      border: 1px rgba(16, 16, 16, 0.508) solid;
+      width: 30%;
+      display: flex;
+      justify-content: center;
+      margin-top: 10%;
+    }
+
+    .error-icon {
+      color: red;
+      display: none;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form>
+      <div>
+        <label for="grossAnnualIncome">Gross Annual Income:</label><br />
+        <input type="number" id="grossAnnualIncome" required />
+        <span id="grossAnnualIncomeError" class="error-icon" title="Gross Annual Income is invalid.">! fill the
+          details</span>
+      </div>
+      <div>
+        <label for="extraIncome">Extra Income:</label><br />
+        <input type="number" id="extraIncome" required />
+        <span id="extraIncomeError" class="error-icon" title="Extra Income is invalid.">! fill the details</span>
+      </div>
+      <div>
+        <label for="deductions">Deductions:</label><br />
+        <input type="number" id="deductions" required />
+        <span id="deductionsError" class="error-icon" title="Deductions is invalid.">! fill the details</span>
+      </div>
+      <div>
+        <label for="age">Age:</label><br />
+        <select id="age" required>
+          <option value="">Select your age</option>
+          <option value="<40">&lt;40</option>
+          <option value=">=40 & <60">≥40 & &lt;60</option>
+          <option value=">=60">≥60</option>
+        </select>
+        <span id="ageError" class="error-icon" title="Please select your age.">! fill the details</span>
+      </div>
+      <br />
+      <button class="btn btn-success" type="button" onclick="calculateTax()">
+        Submit
+      </button>
+    </form>
+
+    <div id="resultModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <h2>Tax Calculation</h2>
+        <p>Your tax amount is: <span id="taxAmount"></span></p>
+        <button type="button" onclick="this.parentNode.parentNode.style.display = 'none'">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculateTax() {
+      // Get the input values
+      const grossAnnualIncome = parseFloat(
+        document.getElementById("grossAnnualIncome").value
+      );
+      const extraIncome = parseFloat(
+        document.getElementById("extraIncome").value
+      );
+      const deductions = parseFloat(
+        document.getElementById("deductions").value
+      );
+      const age = document.getElementById("age").value;
+
+      // Validate the input values
+      let hasError = false;
+      let errorMessage = "";
+
+      // Validate gross annual income, extra income, and deductions
+      if (isNaN(grossAnnualIncome) || grossAnnualIncome < 0) {
+        hasError = true;
+        errorMessage += "Gross Annual Income is invalid. ";
+        showErrorIcon("grossAnnualIncome");
+      } else {
+        hideErrorIcon("grossAnnualIncome");
+      }
+
+      if (isNaN(extraIncome) || extraIncome < 0) {
+        hasError = true;
+        errorMessage += "Extra Income is invalid. ";
+        showErrorIcon("extraIncome");
+      } else {
+        hideErrorIcon("extraIncome");
+      }
+
+      if (isNaN(deductions) || deductions < 0) {
+        hasError = true;
+        errorMessage += "Deductions is invalid. ";
+        showErrorIcon("deductions");
+      } else {
+        hideErrorIcon("deductions");
+      }
+
+      // Validate age
+      if (!age || (age !== "<40" && age !== ">=40 & <60" && age !== ">=60")) {
+        hasError = true;
+        errorMessage += "Please select your age. ";
+        showErrorIcon("age");
+      } else {
+        hideErrorIcon("age");
+      }
+
+      // Calculate the overall income and tax
+      const overallIncome = grossAnnualIncome + extraIncome - deductions;
+      let tax = 0;
+
+      if (overallIncome <= 800000) {
+        tax = 0;
+      } else {
+        const taxableIncome = overallIncome - 800000;
+        if (age === "<40") {
+          tax = taxableIncome * 0.3;
+        } else if (age === ">=40 & <60") {
+          tax = taxableIncome * 0.4;
+        } else {
+          tax = taxableIncome * 0.1;
+        }
+      }
+
+      // Display the result
+      if (hasError) {
+        alert(errorMessage);
+      } else {
+        const resultModal = document.getElementById("resultModal");
+        document.getElementById("taxAmount").textContent = tax.toFixed(2);
+        resultModal.style.display = "block";
+      }
+    }
+
+    // Helper functions to show/hide error icons
+    function showErrorIcon(fieldId) {
+      const errorIcon = document.getElementById(`${fieldId}Error`);
+      errorIcon.style.display = "inline-block";
+    }
+
+    function hideErrorIcon(fieldId) {
+      const errorIcon = document.getElementById(`${fieldId}Error`);
+      errorIcon.style.display = "none";
+    }
+  </script>
+</body>
+
+</html>
