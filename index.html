@@ -20,22 +20,41 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+    </style>
+
+  <style>
+    .whole{
+      background-image:url("tax.jpg");
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+
     .container {
       border: 1px rgba(16, 16, 16, 0.508) solid;
       width: 30%;
       display: flex;
       justify-content: center;
-      margin-top: 10%;
+      margin-top: 5%;
     }
     .heading{
       text-align: center;
-      font-size: 30px;
+      font-size: 50px;
       font-weight: 600;
-      margin-top: 2%;
+      margin-top: 1%;
+      font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  color: #1b2c43;
+  filter: drop-shadow(5px 5px 100px #B3956B);
+  /* font-style: normal; */
     }
     .error-icon {
-      color: red;
+      color: rgb(234, 35, 35);
       display: none;
       margin-left: 5px;
       cursor: pointer;
@@ -54,7 +73,7 @@
     }
 
     .modal-content {
-      background-color: #fefefe;
+      background-color: #1b2c43;
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
@@ -64,12 +83,15 @@
 </head>
 
 <body>
+    <div class="whole">
+        <img src="" alt="">
+
   <div class="heading">
-    <h1>Tax Calculator</h1>
+    <p>Tax Calculator</p>
   </div>
-  <div class="container">
+  <div class="container"  style="background-color: rgba(0, 0, 0, 0.367); color: azure;">
     <form>
-      <div>
+      <div style="font-size: larger;">
         <label for="grossAnnualIncome">Gross Annual Income:</label><br />
         <input type="number" id="grossAnnualIncome" required />
         <span id="grossAnnualIncomeError" class="error-icon" title="Gross Annual Income is invalid.">! fill the
@@ -96,7 +118,7 @@
         <span id="ageError" class="error-icon" title="Please select your age.">! fill the details</span>
       </div>
       <br />
-      <button class="btn btn-success" type="button" onclick="calculateTax()">
+      <button class="btn btn-success" type="button" onclick="calculateTax()" style="margin-left: 30px;">
         Submit
       </button>
     </form>
@@ -111,6 +133,8 @@
       </div>
     </div>
   </div>
+
+</div>
 
   <script>
     function calculateTax() {
