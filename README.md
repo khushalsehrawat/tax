@@ -11,3 +11,15 @@ Describing what in the code:
 5. The calculated tax amount is then displayed in a modal window.
 
 The code also includes some CSS styles and Bootstrap libraries to make the form and modal look better. Overall, it's a simple tax calculation tool that helps users understand how much tax they might need to pay based on their income and age.
+
+
+## Development & Maintenance
+
+**Developed & Maintained by
+[Khushal Sehrawat](https://github.com/khushalsehrawat)**
+— Founder of
+[TheBenzzCreations](https://www.thebenzzcreations.com/).
+
+TheBenzzCreations is a digital development studio specializing in website development, custom software, mobile applications, e-commerce solutions and AI-powered business automation.
+
+For development enquiries and collaborations, visit [TheBenzzCreations](https://www.thebenzzcreations.com/).
