@@ -1,0 +1,12 @@
+{
+  "sites": [
+    {
+      "name": "tax",
+      "root": ".",
+      "base_url": "https://khushalsehrawat.github.io/tax/",
+      "pages": {
+        "index.html": "https://khushalsehrawat.github.io/tax/"
+      }
+    }
+  ]
+}
